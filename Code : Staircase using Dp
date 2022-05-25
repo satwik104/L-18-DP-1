@@ -1,0 +1,15 @@
+//DP SOLUTION 
+long staircase(int n)
+{
+	long *ans = new long[n+1];
+    //base cases
+    ans[0] = 1;//for 0 step
+    ans[1] = 1;//for 1 step only
+    ans[2] = 2;//for 2 steps only
+   // ans[3] = 4;//for 3 steps only
+    
+    //now iteratively we move on till nth step getting ans for each step by above 3 base cases
+    for(int i=3;i<=n;i++)
+        ans[i] = ans[i-1] + ans[i-2] + ans[i-3];
+    return ans[n];
+}
