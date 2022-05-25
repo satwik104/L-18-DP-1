@@ -1,0 +1,47 @@
+//BY MEMOIZATION APPROACH with O(n) TC
+#include<cmath>
+#include<climits>
+int countStepsToOne_help(int n,int *ans)
+{
+    //base case
+    if(n<=1)
+        return 0;
+    //check if utput already exixt
+    if(ans[n]!=-1)
+        return ans[n];
+    //calculate the output
+    int y=INT_MAX,z=INT_MAX;
+    int x=countStepsToOne_help(n-1,ans);
+    if(n%2==0)
+        y=countStepsToOne_help(n/2,ans);
+    if(n%3==0)
+        z=countStepsToOne_help(n/3,ans);
+    //now calculate the best ans that is minimum one
+    int output = min(x,min(y,z))+1;
+    //now before returning it we need to save it in ans array for using in future calls
+    ans[n] = output;
+    return output;
+}
+int countStepsToOne(int n)
+{
+    //making an ans array to carry the unique call outputs
+    int *ans = new int[n+1];
+    for(int i=0; i<=n; i++)
+        ans[i] = -1;
+	return countStepsToOne_help(n,ans);
+}
+/*
+  DP solution iterative one
+  int ans[10000001] = {0};
+  ans[1] = 0;
+  for(int i=2;i<=n;i++)
+  {
+     int x = ans[i-1],y=10000000,z=10000000;
+     if(i%2==0)
+       y = ans[i/2];
+     if(i%3==0)
+       z = ans[i/3];
+     ans[i] = min(x,min(y,z))+1;
+  }
+  return ans[n];
+*/
